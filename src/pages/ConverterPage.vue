@@ -17,7 +17,7 @@
             <input
                 v-model="exchangeableAmount"
                 id="exchangeable-currency-amount"
-                type="number"
+                type="text"
                 class="converter__amount"
                 @input="handleExchangeableAmountInput($event as InputEvent)"
                 min="0"
@@ -25,7 +25,7 @@
             <label for="received-currency-amount">Получаемая валюта:</label>
             <select
                 v-model="receivedCurrency"
-                @change="calculateExchangeableCurrencyAmount"
+                @change="calculateReceivedCurrencyAmount"
             >
                 <option
                     v-for="currency in converterStore.currencies"
@@ -38,7 +38,7 @@
             <input
                 v-model="receivedAmount"
                 id="received-currency-amount"
-                type="number"
+                type="text"
                 class="converter__amount"
                 @input="handleReceivedAmountInput($event as InputEvent)"
                 min="0"
@@ -48,9 +48,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type Ref } from 'vue'
+import { ref } from 'vue'
 import { useConverterStore } from '@/stores/converterStore'
 import type { Rates } from '@/types/converter.dto'
+import { validateNumberInput } from '@/common_functions/validators/validators'
 
 const converterStore = useConverterStore()
 
@@ -58,12 +59,6 @@ const exchangeableCurrency = ref<string>(converterStore.baseCurrency)
 const receivedCurrency = ref<string>(converterStore.baseCurrency)
 const exchangeableAmount = ref<number>(0)
 const receivedAmount = ref<number>(0)
-
-const validateNumberInput = (input: HTMLInputElement, ref: Ref<number>) => {
-    if (/[+-]/g.test(input.value)) {
-        ref.value = +input.value.replace(/[+-]/g, '')
-    }
-}
 
 const calculateReceivedCurrencyAmount = () => {
     if (converterStore.rates) {
@@ -102,10 +97,10 @@ const handleExchangeableAmountInput = (event: InputEvent) => {
 .converter
     margin-top: 20rem
     display: grid
-    grid-template-columns: 200rem 80rem 240rem
+    grid-template-columns: 190rem 80rem 240rem
     column-gap: 20rem
     row-gap: 8rem
 
     input
-        padding-left: 8rem
+        padding-left: 4rem
 </style>
