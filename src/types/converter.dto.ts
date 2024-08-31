@@ -4,4 +4,4 @@ export interface Rates {
     USD: number
 }
 
-export type Currencies = string[]
+export type Currency = 'EUR' | 'RUB' | 'USD'
