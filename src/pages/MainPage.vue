@@ -1,5 +1,10 @@
 <template>
-    <span>{{ converterStore.rates }}</span>
+    <p
+        v-for="(rate, currency) in converterStore.rates"
+        :key="currency"
+    >
+        {{ `${currency}: ${rate.toFixed(2)}` }}
+    </p>
 </template>
 
 <script setup lang="ts">

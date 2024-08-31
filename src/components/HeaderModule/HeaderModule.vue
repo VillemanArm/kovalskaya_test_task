@@ -2,6 +2,15 @@
     <header>
         <router-link to="/">Главная</router-link>
         <router-link to="/converter">Конвертер</router-link>
+        <select v-model="converterStore.baseCurrency">
+            <option
+                v-for="currency in converterStore.currencies"
+                :key="currency"
+                :value="currency"
+            >
+                {{ currency }}
+            </option>
+        </select>
     </header>
 </template>
 
@@ -18,7 +27,7 @@ const props = defineProps<{
 
 onMounted(async () => {
     await converterStore.getRates()
-    console.log(converterStore.rates)
+    console.log(converterStore.currencies)
 })
 </script>
 

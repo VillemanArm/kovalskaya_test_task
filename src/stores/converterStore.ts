@@ -1,17 +1,24 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
 import ConverterApi from '@/common_functions/api/converterApi'
-import type { Rates } from '@/types/converter.dto'
+import type { Currencies, Rates } from '@/types/converter.dto'
 
 const converterApi = new ConverterApi()
 
 export const useConverterStore = defineStore('converter', () => {
     const rates = ref<Rates>()
+    const currencies: Currencies = ['RUB', 'EUR', 'USD']
+    const baseCurrency = ref<string>('USD')
 
     const getRates = async () => {
-        const response = await converterApi.getRates()
+        const response = await converterApi.getRates(baseCurrency.value, currencies)
         rates.value = response?.data.rates
     }
 
-    return { rates, getRates }
+    watch(baseCurrency, async () => {
+        const response = await converterApi.getRates(baseCurrency.value, currencies)
+        rates.value = response?.data.rates
+    })
+
+    return { rates, getRates, currencies, baseCurrency }
 })
