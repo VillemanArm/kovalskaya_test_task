@@ -32,11 +32,13 @@ import { useConverterStore } from '@/stores/converterStore'
 
 const converterStore = useConverterStore()
 
+const UPDATE_TIMEOUT_MS = 60000
+
 converterStore.getRates()
 
-let getRatesInterval = setInterval(() => {
+const getRatesInterval = setInterval(() => {
     converterStore.getRates()
-}, 60000)
+}, UPDATE_TIMEOUT_MS)
 
 onUnmounted(() => {
     clearInterval(getRatesInterval)

@@ -1,6 +1,6 @@
 import type { Ref } from 'vue'
 
-const validateNumberInput = (input: HTMLInputElement, ref: Ref<number>) => {
+const setValidateNumberInput = (input: HTMLInputElement, ref: Ref<number>) => {
     if (/\D/g.test(input.value)) {
         ref.value = +input.value.replace(/\D/g, '')
     }
@@ -9,4 +9,4 @@ const validateNumberInput = (input: HTMLInputElement, ref: Ref<number>) => {
     }
 }
 
-export { validateNumberInput }
+export { setValidateNumberInput }

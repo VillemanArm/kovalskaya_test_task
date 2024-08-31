@@ -1,6 +1,6 @@
 import { ref, computed, watch } from 'vue'
 import { defineStore } from 'pinia'
-import ConverterApi from '@/common_functions/api/converterApi'
+import ConverterApi from '@/utils/api/converterApi'
 import type { Currencies, Rates } from '@/types/converter.dto'
 
 const converterApi = new ConverterApi()

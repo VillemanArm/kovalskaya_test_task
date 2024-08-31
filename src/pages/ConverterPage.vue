@@ -51,7 +51,7 @@
 import { ref } from 'vue'
 import { useConverterStore } from '@/stores/converterStore'
 import type { Rates } from '@/types/converter.dto'
-import { validateNumberInput } from '@/common_functions/validators/validators'
+import { setValidateNumberInput } from '@/utils/validators/validators'
 
 const converterStore = useConverterStore()
 
@@ -81,12 +81,12 @@ const calculateExchangeableCurrencyAmount = () => {
 }
 
 const handleReceivedAmountInput = (event: InputEvent) => {
-    validateNumberInput(event.target as HTMLInputElement, receivedAmount)
+    setValidateNumberInput(event.target as HTMLInputElement, receivedAmount)
     calculateExchangeableCurrencyAmount()
 }
 
 const handleExchangeableAmountInput = (event: InputEvent) => {
-    validateNumberInput(event.target as HTMLInputElement, exchangeableAmount)
+    setValidateNumberInput(event.target as HTMLInputElement, exchangeableAmount)
     calculateReceivedCurrencyAmount()
 }
 </script>
