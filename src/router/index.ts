@@ -1,42 +1,20 @@
-import {createRouter, createWebHistory} from 'vue-router'
-import ListPage from '@/pages/ListPage.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import MainPage from '@/pages/MainPage.vue'
+import ConverterPage from '@/pages/ConverterPage.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: ListPage,
+            name: 'main',
+            component: MainPage,
         },
-        // {
-        //     path: '/',
-        //     component: () => import('layouts/MainLayout.vue'),
-        //     children: [
-        //         {
-        //             path: '',
-        //             component: () => import('pages/MainPage.vue'),
-        //             children: [
-        //                 // {
-        //                 //     path: '',
-        //                 //     component: () => import('src/modules/ResearchListModule.vue'),
-        //                 // },
-        //                 {
-        //                     path: 'research/',
-        //                     component: () => import('src/modules/ResearchListModule.vue'),
-        //                 },
-        //                 {
-        //                     path: 'reports/',
-        //                     component: () => import('src/modules/ReportsListModule.vue'),
-        //                 },
-        //             ],
-        //         },
-        //         {
-        //             path: 'report/:id',
-        //             component: () => import('pages/ReportPage.vue'),
-        //         },
-        //     ],
-        // },
+        {
+            path: '/converter',
+            name: 'converter',
+            component: ConverterPage,
+        },
     ],
 })
 
