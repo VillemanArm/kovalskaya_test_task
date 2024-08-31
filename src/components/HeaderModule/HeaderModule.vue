@@ -28,7 +28,6 @@
 
 <script setup lang="ts">
 import { onUnmounted } from 'vue'
-
 import { useConverterStore } from '@/stores/converterStore'
 
 const converterStore = useConverterStore()
