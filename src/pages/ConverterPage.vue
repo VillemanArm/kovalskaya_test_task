@@ -15,11 +15,11 @@
                 </option>
             </select>
             <input
-                v-model="exchangeableCurrencyAmount"
+                v-model="exchangeableAmount"
                 id="exchangeable-currency-amount"
                 type="number"
                 class="converter__amount"
-                @input="calculateReceivedCurrencyAmount"
+                @input="handleExchangeableAmountInput($event as InputEvent)"
                 min="0"
             />
         </div>
@@ -38,11 +38,11 @@
                 </option>
             </select>
             <input
-                v-model="receivedCurrencyAmount"
+                v-model="receivedAmount"
                 id="received-currency-amount"
                 type="number"
                 class="converter__amount"
-                @input="calculateExchangeableCurrencyAmount"
+                @input="handleReceivedAmountInput($event as InputEvent)"
                 min="0"
             />
         </div>
@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, type Ref } from 'vue'
 import { useConverterStore } from '@/stores/converterStore'
 import type { Rates } from '@/types/converter.dto'
 
@@ -58,13 +58,19 @@ const converterStore = useConverterStore()
 
 const exchangeableCurrency = ref<string>(converterStore.baseCurrency)
 const receivedCurrency = ref<string>(converterStore.baseCurrency)
-const exchangeableCurrencyAmount = ref<number>(0)
-const receivedCurrencyAmount = ref<number>(0)
+const exchangeableAmount = ref<number>(0)
+const receivedAmount = ref<number>(0)
+
+const validateNumberInput = (input: HTMLInputElement, ref: Ref<number>) => {
+    if (/[+-]/g.test(input.value)) {
+        ref.value = +input.value.replace(/[+-]/g, '')
+    }
+}
 
 const calculateReceivedCurrencyAmount = () => {
     if (converterStore.rates) {
-        receivedCurrencyAmount.value = +(
-            (exchangeableCurrencyAmount.value *
+        receivedAmount.value = +(
+            (exchangeableAmount.value *
                 converterStore.rates[receivedCurrency.value as keyof Rates]) /
             converterStore.rates[exchangeableCurrency.value as keyof Rates]
         ).toFixed(2)
@@ -73,19 +79,23 @@ const calculateReceivedCurrencyAmount = () => {
 
 const calculateExchangeableCurrencyAmount = () => {
     if (converterStore.rates) {
-        exchangeableCurrencyAmount.value = +(
-            (receivedCurrencyAmount.value *
+        exchangeableAmount.value = +(
+            (receivedAmount.value *
                 converterStore.rates[exchangeableCurrency.value as keyof Rates]) /
             converterStore.rates[receivedCurrency.value as keyof Rates]
         ).toFixed(2)
     }
 }
 
-watch(exchangeableCurrencyAmount, () => {
-    if (exchangeableCurrencyAmount.value < 0) {
-        receivedCurrencyAmount.value = -exchangeableCurrencyAmount.value
-    }
-})
+const handleReceivedAmountInput = (event: InputEvent) => {
+    validateNumberInput(event.target as HTMLInputElement, receivedAmount)
+    calculateExchangeableCurrencyAmount()
+}
+
+const handleExchangeableAmountInput = (event: InputEvent) => {
+    validateNumberInput(event.target as HTMLInputElement, exchangeableAmount)
+    calculateReceivedCurrencyAmount()
+}
 </script>
 
 <style scoped lang="sass">
