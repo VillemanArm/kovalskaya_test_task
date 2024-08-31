@@ -1,6 +1,6 @@
 <template>
-    <form class="converter">
-        <div class="converter__block">
+    <div class="container">
+        <div class="converter">
             <label for="exchangeable-currency-amount">Обмениваемая валюта:</label>
             <select
                 v-model="exchangeableCurrency"
@@ -22,8 +22,6 @@
                 @input="handleExchangeableAmountInput($event as InputEvent)"
                 min="0"
             />
-        </div>
-        <div class="converter__block">
             <label for="received-currency-amount">Получаемая валюта:</label>
             <select
                 v-model="receivedCurrency"
@@ -46,7 +44,7 @@
                 min="0"
             />
         </div>
-    </form>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -100,6 +98,14 @@ const handleExchangeableAmountInput = (event: InputEvent) => {
 
 <style scoped lang="sass">
 @import '@/assets/styles/constants.sass'
-.converter__amount
-    border: 1px solid black
+
+.converter
+    margin-top: 20rem
+    display: grid
+    grid-template-columns: 200rem 80rem 240rem
+    column-gap: 20rem
+    row-gap: 8rem
+
+    input
+        padding-left: 8rem
 </style>

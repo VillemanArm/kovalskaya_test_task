@@ -1,16 +1,28 @@
 <template>
-    <header>
-        <router-link to="/">Главная</router-link>
-        <router-link to="/converter">Конвертер</router-link>
-        <select v-model="converterStore.baseCurrency">
-            <option
-                v-for="currency in converterStore.currencies"
-                :key="currency"
-                :value="currency"
+    <header class="header">
+        <div class="container">
+            <router-link
+                to="/"
+                class="header__logo"
+                >Конвертер валют</router-link
             >
-                {{ currency }}
-            </option>
-        </select>
+            <div class="header__nav">
+                <router-link to="/">Главная</router-link>
+                <router-link to="/converter">Конвертер</router-link>
+            </div>
+            <div class="header__toolbar">
+                <span>Основная валюта:</span>
+                <select v-model="converterStore.baseCurrency">
+                    <option
+                        v-for="currency in converterStore.currencies"
+                        :key="currency"
+                        :value="currency"
+                    >
+                        {{ currency }}
+                    </option>
+                </select>
+            </div>
+        </div>
     </header>
 </template>
 
@@ -32,4 +44,36 @@ onMounted(async () => {
 
 <style scoped lang="sass">
 @import '@/assets/styles/constants.sass'
+
+.header
+    width: 100vw
+    height: 60rem
+
+    font-size: 18rem
+
+    background-color: $primary-color
+
+    .container
+        height: 100%
+        display: flex
+        align-items: center
+        justify-content: space-between
+
+    a
+        color: $primary-font-color
+
+.header__logo
+    font-size: 26rem
+
+.header__nav
+    display: flex
+    gap: 16rem
+
+    a:hover
+        text-decoration: underline
+
+.header__toolbar
+    display: flex
+    align-items: center
+    gap: 16rem
 </style>
