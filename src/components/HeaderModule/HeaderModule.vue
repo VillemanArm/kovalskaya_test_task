@@ -27,18 +27,20 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed, onMounted, onUpdated, watch } from 'vue'
-//import {useRoute, useRouter} from 'vue-router'
+import { onMounted, onUnmounted } from 'vue'
+
 import { useConverterStore } from '@/stores/converterStore'
 
 const converterStore = useConverterStore()
 
-const props = defineProps<{
-    msg?: string
-}>()
+converterStore.getRates()
 
-onMounted(async () => {
-    await converterStore.getRates()
+let getRatesInterval = setInterval(() => {
+    converterStore.getRates()
+}, 60000)
+
+onUnmounted(() => {
+    clearInterval(getRatesInterval)
 })
 </script>
 
