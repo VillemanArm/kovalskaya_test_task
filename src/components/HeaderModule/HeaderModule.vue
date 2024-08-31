@@ -27,7 +27,6 @@ const props = defineProps<{
 
 onMounted(async () => {
     await converterStore.getRates()
-    console.log(converterStore.currencies)
 })
 </script>
 
